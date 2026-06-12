@@ -3,6 +3,7 @@
   "slug": "2026-06-12-release-v3-7-1",
   "date": "2026-06-12",
   "critical": false,
+  "discussionUrl": "https://github.com/AzamatMurra/steamoperationhub-releases/discussions/2",
   "translations": {
     "ru": {
       "lang": "ru",
@@ -14,7 +15,7 @@
         "Доступны сборки для macOS на Apple Silicon",
         "Обновление опубликовано в GitHub Releases"
       ],
-      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.ru.md"
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/discussions/2"
     },
     "en": {
       "lang": "en",
@@ -26,7 +27,7 @@
         "Apple Silicon macOS builds are available",
         "The update is published in GitHub Releases"
       ],
-      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.en.md"
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/discussions/2"
     },
     "uk": {
       "lang": "uk",
@@ -38,7 +39,7 @@
         "Доступні збірки для macOS на Apple Silicon",
         "Оновлення опубліковано в GitHub Releases"
       ],
-      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.uk.md"
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/discussions/2"
     }
   }
 }
