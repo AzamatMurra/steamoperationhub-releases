@@ -1,0 +1,44 @@
+{
+  "type": "roadmap",
+  "slug": "2026-06-10-payment-flow-roadmap",
+  "date": "2026-06-10",
+  "critical": false,
+  "translations": {
+    "ru": {
+      "lang": "ru",
+      "title": "План развития payment flow",
+      "summary": "Планируем расширение способов оплаты для лицензий и Steam Wallet flows.",
+      "telegramTitle": "План развития payment flow",
+      "telegramSummary": [
+        "Будет общий слой платёжных провайдеров",
+        "Лицензии и wallet flows смогут использовать один payment layer",
+        "Подробности опубликованы в GitHub"
+      ],
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-10-payment-flow-roadmap.ru.md"
+    },
+    "en": {
+      "lang": "en",
+      "title": "Payment flow roadmap",
+      "summary": "We plan to expand payment options for licenses and Steam Wallet flows.",
+      "telegramTitle": "Payment flow roadmap",
+      "telegramSummary": [
+        "A shared payment provider layer is planned",
+        "Licenses and wallet flows will use one payment layer",
+        "Full details are published on GitHub"
+      ],
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-10-payment-flow-roadmap.en.md"
+    },
+    "uk": {
+      "lang": "uk",
+      "title": "План розвитку payment flow",
+      "summary": "Плануємо розширення способів оплати для ліцензій і Steam Wallet flows.",
+      "telegramTitle": "План розвитку payment flow",
+      "telegramSummary": [
+        "Заплановано спільний шар платіжних провайдерів",
+        "Ліцензії та wallet flows використовуватимуть один payment layer",
+        "Повні подробиці опубліковано в GitHub"
+      ],
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-10-payment-flow-roadmap.uk.md"
+    }
+  }
+}
