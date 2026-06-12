@@ -1,44 +1,44 @@
 {
-  "type": "roadmap",
-  "slug": "2026-06-10-payment-flow-roadmap",
-  "date": "2026-06-10",
+  "type": "announcement",
+  "slug": "2026-06-12-release-v3-7-1",
+  "date": "2026-06-12",
   "critical": false,
   "translations": {
     "ru": {
       "lang": "ru",
-      "title": "План развития payment flow",
-      "summary": "Планируем расширение способов оплаты для лицензий и Steam Wallet flows.",
-      "telegramTitle": "План развития payment flow",
+      "title": "SteamOperationHub 3.7.1 вышел",
+      "summary": "Новая версия SteamOperationHub 3.7.1 доступна для Windows и macOS.",
+      "telegramTitle": "SteamOperationHub 3.7.1 вышел",
       "telegramSummary": [
-        "Будет общий слой платёжных провайдеров",
-        "Лицензии и wallet flows смогут использовать один payment layer",
-        "Подробности опубликованы в GitHub"
+        "Доступен установщик для Windows",
+        "Доступны сборки для macOS на Apple Silicon",
+        "Обновление опубликовано в GitHub Releases"
       ],
-      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-10-payment-flow-roadmap.ru.md"
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.ru.md"
     },
     "en": {
       "lang": "en",
-      "title": "Payment flow roadmap",
-      "summary": "We plan to expand payment options for licenses and Steam Wallet flows.",
-      "telegramTitle": "Payment flow roadmap",
+      "title": "SteamOperationHub 3.7.1 is available",
+      "summary": "The new SteamOperationHub 3.7.1 release is available for Windows and macOS.",
+      "telegramTitle": "SteamOperationHub 3.7.1 is available",
       "telegramSummary": [
-        "A shared payment provider layer is planned",
-        "Licenses and wallet flows will use one payment layer",
-        "Full details are published on GitHub"
+        "The Windows installer is available",
+        "Apple Silicon macOS builds are available",
+        "The update is published in GitHub Releases"
       ],
-      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-10-payment-flow-roadmap.en.md"
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.en.md"
     },
     "uk": {
       "lang": "uk",
-      "title": "План розвитку payment flow",
-      "summary": "Плануємо розширення способів оплати для ліцензій і Steam Wallet flows.",
-      "telegramTitle": "План розвитку payment flow",
+      "title": "SteamOperationHub 3.7.1 вийшов",
+      "summary": "Нова версія SteamOperationHub 3.7.1 доступна для Windows і macOS.",
+      "telegramTitle": "SteamOperationHub 3.7.1 вийшов",
       "telegramSummary": [
-        "Заплановано спільний шар платіжних провайдерів",
-        "Ліцензії та wallet flows використовуватимуть один payment layer",
-        "Повні подробиці опубліковано в GitHub"
+        "Доступний інсталятор для Windows",
+        "Доступні збірки для macOS на Apple Silicon",
+        "Оновлення опубліковано в GitHub Releases"
       ],
-      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-10-payment-flow-roadmap.uk.md"
+      "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.uk.md"
     }
   }
 }

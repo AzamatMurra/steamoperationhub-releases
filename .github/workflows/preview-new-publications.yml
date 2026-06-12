@@ -1,0 +1,109 @@
+name: Publish new discussions and Telegram previews
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'news/*.md'
+      - 'news/index.json'
+
+permissions:
+  contents: write
+  discussions: write
+
+concurrency:
+  group: publish-new-discussions
+  cancel-in-progress: false
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish Discussions and request Telegram previews
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
+          NOTIFY_ENDPOINT: ${{ secrets.NOTIFY_ENDPOINT }}
+          INTERNAL_NOTIFY_SECRET: ${{ secrets.INTERNAL_NOTIFY_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          : "${NOTIFY_ENDPOINT:?NOTIFY_ENDPOINT secret is required}"
+          : "${INTERNAL_NOTIFY_SECRET:?INTERNAL_NOTIFY_SECRET secret is required}"
+
+          if git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+            ADDED_FILES="$(git diff --diff-filter=A --name-only "$BEFORE_SHA" "$CURRENT_SHA" -- 'news/*.md')"
+          else
+            ADDED_FILES="$(git diff-tree --root --diff-filter=A --no-commit-id --name-only -r "$CURRENT_SHA" -- 'news/*.md')"
+          fi
+          if [ -z "$ADDED_FILES" ]; then
+            echo "No new publications."
+            exit 0
+          fi
+
+          REQUESTS="$(printf '%s\n' "$ADDED_FILES" | npm run --silent publications:detect)"
+          REPOSITORY_ID="$(gh api graphql -f query='query { repository(owner: "AzamatMurra", name: "steamoperationhub-releases") { id } }' --jq '.data.repository.id')"
+          CATEGORY_ID="$(gh api graphql -f query='query { repository(owner: "AzamatMurra", name: "steamoperationhub-releases") { discussionCategories(first: 20) { nodes { id slug } } } }' --jq '.data.repository.discussionCategories.nodes[] | select(.slug == "announcements") | .id')"
+          : "${CATEGORY_ID:?Announcements discussion category is required}"
+
+          PREVIEW_REQUESTS=""
+          while IFS= read -r request; do
+            [ -n "$request" ] || continue
+            SLUG="$(jq -r '.slug' <<< "$request")"
+            DRAFT="$(npm run --silent discussion:draft -- "$SLUG")"
+            MARKER="<!-- soh-publication:${SLUG} -->"
+            DISCUSSION_URL="$(gh api graphql \
+              -f query='query { repository(owner: "AzamatMurra", name: "steamoperationhub-releases") { discussions(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) { nodes { url body } } } }' \
+              | jq -r --arg marker "$MARKER" '.data.repository.discussions.nodes[] | select(.body | contains($marker)) | .url' \
+              | head -n 1)"
+            if [ -z "$DISCUSSION_URL" ]; then
+              DISCUSSION_URL="$(gh api graphql \
+                -f query='mutation($repositoryId: ID!, $categoryId: ID!, $title: String!, $body: String!) { createDiscussion(input: {repositoryId: $repositoryId, categoryId: $categoryId, title: $title, body: $body}) { discussion { url } } }' \
+                -f repositoryId="$REPOSITORY_ID" \
+                -f categoryId="$CATEGORY_ID" \
+                -f title="$(jq -r '.title' <<< "$DRAFT")" \
+                -f body="$(jq -r '.body' <<< "$DRAFT")" \
+                --jq '.data.createDiscussion.discussion.url')"
+            fi
+            npm run --silent discussion:link -- "$SLUG" "$DISCUSSION_URL"
+            PREVIEW_REQUESTS="${PREVIEW_REQUESTS}${request}"$'\n'
+          done <<< "$REQUESTS"
+
+          npm run indexes:generate
+          npm test
+          npm run indexes:check
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add news latest-news.json
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: link published discussions"
+          fi
+          git pull --rebase origin main
+          git push
+
+          sleep 5
+          while IFS= read -r request; do
+            [ -n "$request" ] || continue
+            curl --fail-with-body \
+              --retry 3 \
+              --retry-all-errors \
+              --header "Authorization: Bearer $INTERNAL_NOTIFY_SECRET" \
+              --header "Content-Type: application/json" \
+              --data "$(jq -c '. + {source: "github-actions"}' <<< "$request")" \
+              "${NOTIFY_ENDPOINT%/}/internal/notifications/publication-preview"
+          done <<< "$PREVIEW_REQUESTS"

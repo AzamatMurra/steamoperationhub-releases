@@ -1,5 +1,49 @@
 [
   {
+    "type": "announcement",
+    "slug": "2026-06-12-release-v3-7-1",
+    "date": "2026-06-12",
+    "critical": false,
+    "translations": {
+      "ru": {
+        "lang": "ru",
+        "title": "SteamOperationHub 3.7.1 вышел",
+        "summary": "Новая версия SteamOperationHub 3.7.1 доступна для Windows и macOS.",
+        "telegramTitle": "SteamOperationHub 3.7.1 вышел",
+        "telegramSummary": [
+          "Доступен установщик для Windows",
+          "Доступны сборки для macOS на Apple Silicon",
+          "Обновление опубликовано в GitHub Releases"
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.ru.md"
+      },
+      "en": {
+        "lang": "en",
+        "title": "SteamOperationHub 3.7.1 is available",
+        "summary": "The new SteamOperationHub 3.7.1 release is available for Windows and macOS.",
+        "telegramTitle": "SteamOperationHub 3.7.1 is available",
+        "telegramSummary": [
+          "The Windows installer is available",
+          "Apple Silicon macOS builds are available",
+          "The update is published in GitHub Releases"
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.en.md"
+      },
+      "uk": {
+        "lang": "uk",
+        "title": "SteamOperationHub 3.7.1 вийшов",
+        "summary": "Нова версія SteamOperationHub 3.7.1 доступна для Windows і macOS.",
+        "telegramTitle": "SteamOperationHub 3.7.1 вийшов",
+        "telegramSummary": [
+          "Доступний інсталятор для Windows",
+          "Доступні збірки для macOS на Apple Silicon",
+          "Оновлення опубліковано в GitHub Releases"
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/news/2026-06-12-release-v3-7-1.uk.md"
+      }
+    }
+  },
+  {
     "type": "roadmap",
     "slug": "2026-06-10-payment-flow-roadmap",
     "date": "2026-06-10",
