@@ -1,0 +1,63 @@
+name: Request Telegram notification preview
+
+on:
+  workflow_dispatch:
+    inputs:
+      notification_type:
+        description: Notification type
+        required: true
+        type: choice
+        options:
+          - release
+          - critical
+          - maintenance
+          - announcement
+          - roadmap
+      identifier:
+        description: Release version or news slug
+        required: true
+        type: string
+      dry_run:
+        description: Validate metadata without sending admin preview
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request admin preview
+        env:
+          NOTIFY_ENDPOINT: ${{ secrets.NOTIFY_ENDPOINT }}
+          INTERNAL_NOTIFY_SECRET: ${{ secrets.INTERNAL_NOTIFY_SECRET }}
+          NOTIFICATION_TYPE: ${{ inputs.notification_type }}
+          IDENTIFIER: ${{ inputs.identifier }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          : "${NOTIFY_ENDPOINT:?NOTIFY_ENDPOINT secret is required}"
+          : "${INTERNAL_NOTIFY_SECRET:?INTERNAL_NOTIFY_SECRET secret is required}"
+
+          if [ "$NOTIFICATION_TYPE" = "release" ]; then
+            IDENTITY_FIELD="version"
+          else
+            IDENTITY_FIELD="slug"
+          fi
+
+          jq -n \
+            --arg type "$NOTIFICATION_TYPE" \
+            --arg identity "$IDENTIFIER" \
+            --arg identityField "$IDENTITY_FIELD" \
+            --argjson dryRun "$DRY_RUN" \
+            '{type: $type, source: "github-actions", dryRun: $dryRun} + {($identityField): $identity}' \
+            > payload.json
+
+          curl --fail-with-body \
+            --request POST \
+            --header "Authorization: Bearer $INTERNAL_NOTIFY_SECRET" \
+            --header "Content-Type: application/json" \
+            --data @payload.json \
+            "${NOTIFY_ENDPOINT%/}/internal/notifications/release-preview"
