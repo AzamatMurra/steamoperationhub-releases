@@ -1,6 +1,48 @@
 [
   {
     "type": "release",
+    "version": "v3.7.1",
+    "date": "2026-06-12",
+    "critical": false,
+    "releaseUrl": "https://github.com/AzamatMurra/steamoperationhub-releases/releases/tag/v3.7.1",
+    "translations": {
+      "ru": {
+        "lang": "ru",
+        "title": "SteamOperationHub v3.7.1",
+        "summary": "Актуальная публичная сборка для Windows и macOS.",
+        "telegramTitle": "SteamOperationHub v3.7.1 доступен",
+        "telegramSummary": [
+          "Доступен установщик для Windows",
+          "Доступны сборки для macOS на Apple Silicon"
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/releases/v3.7.1.ru.md"
+      },
+      "en": {
+        "lang": "en",
+        "title": "SteamOperationHub v3.7.1",
+        "summary": "Current public build for Windows and macOS.",
+        "telegramTitle": "SteamOperationHub v3.7.1 is available",
+        "telegramSummary": [
+          "The Windows installer is available",
+          "Apple Silicon macOS builds are available"
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/releases/v3.7.1.en.md"
+      },
+      "uk": {
+        "lang": "uk",
+        "title": "SteamOperationHub v3.7.1",
+        "summary": "Актуальна публічна збірка для Windows і macOS.",
+        "telegramTitle": "SteamOperationHub v3.7.1 доступний",
+        "telegramSummary": [
+          "Доступний інсталятор для Windows",
+          "Доступні збірки для macOS на Apple Silicon"
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/releases/v3.7.1.uk.md"
+      }
+    }
+  },
+  {
+    "type": "release",
     "version": "v3.7.0",
     "date": "2026-05-25",
     "critical": false,

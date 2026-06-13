@@ -30,10 +30,9 @@ npm run check
 Commit the publication files and generated JSON indexes together. Telegram
 release broadcasts start automatically after a successful tag-based desktop
 release. A newly added news slug automatically creates one localized GitHub
-Discussion, writes its URL back to the publication metadata, and creates an
-administrator preview in `@SteamOperationHubBot`. Editing an existing slug does
-not create another Discussion or preview. The administrator must press Send
-before a news publication is broadcast.
+Discussion, writes its URL back to the publication metadata, and broadcasts the
+localized notification through `@SteamOperationHubBot`. Editing an existing
+slug does not create another Discussion or broadcast.
 
 Agents can accept natural-language publication requests such as:
 
@@ -45,4 +44,5 @@ Agents can accept natural-language publication requests such as:
 ```
 
 The agent creates the `ru/en/uk` Markdown set from `templates/news.*.md` and
-updates the indexes. The workflow handles the Discussion and Telegram preview.
+updates the indexes. The workflow handles the Discussion and automatic Telegram
+broadcast.

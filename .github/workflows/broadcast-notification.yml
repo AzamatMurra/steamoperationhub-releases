@@ -1,4 +1,4 @@
-name: Request Telegram notification preview
+name: Broadcast Telegram notification
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ on:
         required: true
         type: string
       dry_run:
-        description: Validate metadata without sending admin preview
+        description: Validate metadata without broadcasting
         required: true
         default: false
         type: boolean
@@ -27,10 +27,10 @@ permissions:
   contents: read
 
 jobs:
-  preview:
+  broadcast:
     runs-on: ubuntu-latest
     steps:
-      - name: Request admin preview
+      - name: Validate or broadcast notification
         env:
           NOTIFY_ENDPOINT: ${{ secrets.NOTIFY_ENDPOINT }}
           INTERNAL_NOTIFY_SECRET: ${{ secrets.INTERNAL_NOTIFY_SECRET }}
@@ -43,21 +43,33 @@ jobs:
 
           if [ "$NOTIFICATION_TYPE" = "release" ]; then
             IDENTITY_FIELD="version"
+            BROADCAST_PATH="release-broadcast"
           else
             IDENTITY_FIELD="slug"
+            BROADCAST_PATH="publication-broadcast"
           fi
 
-          jq -n \
-            --arg type "$NOTIFICATION_TYPE" \
-            --arg identity "$IDENTIFIER" \
-            --arg identityField "$IDENTITY_FIELD" \
-            --argjson dryRun "$DRY_RUN" \
-            '{type: $type, source: "github-actions", dryRun: $dryRun} + {($identityField): $identity}' \
-            > payload.json
+          if [ "$DRY_RUN" = "true" ]; then
+            ENDPOINT_PATH="release-preview"
+            jq -n \
+              --arg type "$NOTIFICATION_TYPE" \
+              --arg identity "$IDENTIFIER" \
+              --arg identityField "$IDENTITY_FIELD" \
+              '{type: $type, source: "github-actions", dryRun: true} + {($identityField): $identity}' \
+              > payload.json
+          else
+            ENDPOINT_PATH="$BROADCAST_PATH"
+            jq -n \
+              --arg type "$NOTIFICATION_TYPE" \
+              --arg identity "$IDENTIFIER" \
+              --arg identityField "$IDENTITY_FIELD" \
+              '{type: $type, source: "github-actions"} + {($identityField): $identity}' \
+              > payload.json
+          fi
 
           curl --fail-with-body \
             --request POST \
             --header "Authorization: Bearer $INTERNAL_NOTIFY_SECRET" \
             --header "Content-Type: application/json" \
             --data @payload.json \
-            "${NOTIFY_ENDPOINT%/}/internal/notifications/release-preview"
+            "${NOTIFY_ENDPOINT%/}/internal/notifications/$ENDPOINT_PATH"

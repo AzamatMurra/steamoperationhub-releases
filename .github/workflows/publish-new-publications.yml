@@ -1,4 +1,4 @@
-name: Publish new discussions and Telegram previews
+name: Publish new discussions and Telegram broadcasts
 
 on:
   push:
@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  preview:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Publish Discussions and request Telegram previews
+      - name: Publish Discussions and broadcast Telegram notifications
         env:
           BEFORE_SHA: ${{ github.event.before }}
           CURRENT_SHA: ${{ github.sha }}
@@ -60,7 +60,7 @@ jobs:
           CATEGORY_ID="$(gh api graphql -f query='query { repository(owner: "AzamatMurra", name: "steamoperationhub-releases") { discussionCategories(first: 20) { nodes { id slug } } } }' --jq '.data.repository.discussionCategories.nodes[] | select(.slug == "announcements") | .id')"
           : "${CATEGORY_ID:?Announcements discussion category is required}"
 
-          PREVIEW_REQUESTS=""
+          BROADCAST_REQUESTS=""
           while IFS= read -r request; do
             [ -n "$request" ] || continue
             SLUG="$(jq -r '.slug' <<< "$request")"
@@ -80,7 +80,7 @@ jobs:
                 --jq '.data.createDiscussion.discussion.url')"
             fi
             npm run --silent discussion:link -- "$SLUG" "$DISCUSSION_URL"
-            PREVIEW_REQUESTS="${PREVIEW_REQUESTS}${request}"$'\n'
+            BROADCAST_REQUESTS="${BROADCAST_REQUESTS}${request}"$'\n'
           done <<< "$REQUESTS"
 
           npm run indexes:generate
@@ -105,5 +105,5 @@ jobs:
               --header "Authorization: Bearer $INTERNAL_NOTIFY_SECRET" \
               --header "Content-Type: application/json" \
               --data "$(jq -c '. + {source: "github-actions"}' <<< "$request")" \
-              "${NOTIFY_ENDPOINT%/}/internal/notifications/publication-preview"
-          done <<< "$PREVIEW_REQUESTS"
+              "${NOTIFY_ENDPOINT%/}/internal/notifications/publication-broadcast"
+          done <<< "$BROADCAST_REQUESTS"
