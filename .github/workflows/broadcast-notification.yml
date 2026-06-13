@@ -69,6 +69,8 @@ jobs:
 
           curl --fail-with-body \
             --request POST \
+            --retry 3 \
+            --retry-all-errors \
             --header "Authorization: Bearer $INTERNAL_NOTIFY_SECRET" \
             --header "Content-Type: application/json" \
             --data @payload.json \
