@@ -1,6 +1,45 @@
 [
   {
     "type": "release",
+    "version": "v3.7.3",
+    "date": "2026-11-27",
+    "critical": false,
+    "releaseUrl": "https://github.com/AzamatMurra/steamoperationhub-releases/releases/tag/v3.7.3",
+    "translations": {
+      "ru": {
+        "lang": "ru",
+        "title": "SteamOperationHub v3.7.3",
+        "summary": "Опубликована новая версия SteamOperationHub.",
+        "telegramTitle": "Доступен SteamOperationHub v3.7.3",
+        "telegramSummary": [
+          "Обновление готово к загрузке для Windows и macOS."
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/releases/v3.7.3.ru.md"
+      },
+      "en": {
+        "lang": "en",
+        "title": "SteamOperationHub v3.7.3",
+        "summary": "A new SteamOperationHub version has been published.",
+        "telegramTitle": "SteamOperationHub v3.7.3 is available",
+        "telegramSummary": [
+          "The update is ready to download for Windows and macOS."
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/releases/v3.7.3.en.md"
+      },
+      "uk": {
+        "lang": "uk",
+        "title": "SteamOperationHub v3.7.3",
+        "summary": "Опубліковано нову версію SteamOperationHub.",
+        "telegramTitle": "Доступний SteamOperationHub v3.7.3",
+        "telegramSummary": [
+          "Оновлення готове до завантаження для Windows і macOS."
+        ],
+        "url": "https://github.com/AzamatMurra/steamoperationhub-releases/blob/main/releases/v3.7.3.uk.md"
+      }
+    }
+  },
+  {
+    "type": "release",
     "version": "v3.7.2",
     "date": "2026-06-19",
     "critical": false,
